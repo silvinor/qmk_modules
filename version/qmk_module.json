@@ -1,0 +1,10 @@
+{
+    "module_name": "Version",
+    "maintainer": "silvinor",
+    "keycodes": [
+        {
+            "key": "COMMUNITY_MODULE_SEND_VERSION",
+            "aliases": ["CM_VERS"]
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "module_name": "Caffeine",
+    "maintainer": "silvinor",
+    "keycodes": [
+        {
+            "key": "COMMUNITY_MODULE_CAFFEINE_ON",
+            "aliases": ["CM_CF_1"]
+        },
+        {
+            "key": "COMMUNITY_MODULE_CAFFEINE_OFF",
+            "aliases": ["CM_CF_0"]
+        },
+        {
+            "key": "COMMUNITY_MODULE_CAFFEINE_TOGGLE",
+            "aliases": ["CM_COFY"]
+        }
+    ]
+}
