@@ -31,6 +31,47 @@ bool     is_blink_rgb_on        = false; // Blink LED timer buffer
 uint32_t timer_blink_rgb_buffer = 0;     // Blink LED timer buffer
 #endif                                   // RGB_MATRIX_ENABLE
 
+#ifdef MOUSEKEY_ENABLE
+uint8_t mouse_loop = 0; // keep track of the jiggle mouse movements
+#endif
+
+void __caffeine_tap_jiggle(bool mouseMove) {
+    // --- tap a key ---
+    tap_code(CAFFEINE_KEY_CODE);
+
+#ifdef MOUSEKEY_ENABLE
+    // --- mouse jiggle ---
+    //       ┌───┐
+    //       │ 0 │      0 -> Up Down
+    //   ┌───┼───┼───┐  1 -> Right Left
+    //   │ 3 │ ╳ │ 1 │  2 -> Down Up
+    //   └───┼───┼───┘  3 -> Left Right
+    //       │ 2 │
+    //       └───┘
+    if (mouseMove) {
+        switch (mouse_loop) {
+            case 1:
+                tap_code(KC_MS_RIGHT);
+                tap_code(KC_MS_LEFT);
+                break;
+            case 2:
+                tap_code(KC_MS_DOWN);
+                tap_code(KC_MS_UP);
+                break;
+            case 3:
+                tap_code(KC_MS_LEFT);
+                tap_code(KC_MS_RIGHT);
+                break;
+            default:
+                tap_code(KC_MS_UP);
+                tap_code(KC_MS_DOWN);
+                break;
+        }
+        mouse_loop = (mouse_loop + 1) % 4;
+    }
+#endif // MOUSEKEY_ENABLE
+}
+
 /**
  * !! : if you're using as a module, you will need to call this from within a `matrix_scan_user` function
  */
@@ -39,10 +80,7 @@ void matrix_scan_caffeine(void) {
         /* Keycode and Mouse Jiggle code */
         if (sync_timer_elapsed32(timer_caffeine_buffer) > CAFFEINE_KEY_DELAY) { // default = 59 sec
             timer_caffeine_buffer = sync_timer_read32();                        // reset timer
-            // --- tap a key ---
-            tap_code(CAFFEINE_KEY_CODE);
-            // --- mouse jiggle ---
-            // TODO : not implemented
+            __caffeine_tap_jiggle(true);
         }
     }
 }
@@ -72,9 +110,7 @@ bool rgb_matrix_indicators_caffeine(void) {
                 HSV hsv;
                 hsv.h = caffeine_color_loop * 51;
                 hsv.s = 255;
-                hsv.v = rgb_matrix_get_val(); // current brightness
-                if (hsv.v > RGB_MATRIX_MAXIMUM_BRIGHTNESS) hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
-                if (hsv.v < RGB_MATRIX_MINIMUM_BRIGHTNESS) hsv.v = RGB_MATRIX_MINIMUM_BRIGHTNESS;
+                hsv.v = MINMAX(rgb_matrix_get_val() + RGB_MATRIX_VAL_STEP, RGB_MATRIX_MINIMUM_BRIGHTNESS, RGB_MATRIX_MAXIMUM_BRIGHTNESS);
                 // set the new color
                 caffeine_color      = hsv_to_rgb(hsv);
                 caffeine_color_loop = (caffeine_color_loop + 1) % 6;
@@ -93,11 +129,11 @@ bool rgb_matrix_indicators_caffeine(void) {
 bool process_keycode_caffeine_on(keyrecord_t *record) {
     if (record->event.pressed) {
         is_caffeine_on = true;
-        tap_code(CAFFEINE_KEY_CODE); // dummy tap the default keycode so that the kb registers a key tap
+        __caffeine_tap_jiggle(false); // dummy tap the default keycode so that the kb registers a key tap
 #ifdef RGB_MATRIX_ENABLE
         caffeine_key_index = g_led_config.matrix_co[record->event.key.row][record->event.key.col]; // bind the key that was pressed
-#endif                                                                                             // RGB_MATRIX_ENABLE
-        timer_caffeine_buffer = sync_timer_read32();                                               // start the timer
+#endif // RGB_MATRIX_ENABLE
+        timer_caffeine_buffer = sync_timer_read32(); // start the timer
     }
     return false;
 }
@@ -107,7 +143,7 @@ bool process_keycode_caffeine_off(keyrecord_t *record) {
         is_caffeine_on = false;
 #ifdef RGB_MATRIX_ENABLE
         // caffeine_key_index = UINT8_MAX;
-        is_blink_rgb_on    = false;
+        is_blink_rgb_on = false;
 #endif // RGB_MATRIX_ENABLE
     }
     return false;
@@ -135,8 +171,8 @@ bool process_record_caffeine(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case COMMUNITY_MODULE_CAFFEINE_TOGGLE:
-           return process_keycode_caffeine_toggle(record);
-           break;
+            return process_keycode_caffeine_toggle(record);
+            break;
     }
     return true;
 }
