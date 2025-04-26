@@ -4,7 +4,7 @@
 #pragma once
 
 #ifndef COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE
-#    define COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE
+#    define COMMUNITY_MODULE_SILVINOR_CAFFEINE_ENABLE true
 
 void matrix_scan_caffeine(void);
 void housekeeping_task_caffeine(void);
