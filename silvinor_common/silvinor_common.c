@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include QMK_KEYBOARD_H
-#include "common.h"
+#include "silvinor_common.h"
 
 bool kc_register_code_2(keyrecord_t *record, uint16_t data1, uint16_t data2) {
     if (record->event.pressed) {
