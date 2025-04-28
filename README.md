@@ -22,8 +22,8 @@ Each module is in it's own child folder, and has a README.md file with instructi
 
 | Module | Description |
 | --:|:-- |
-| SilvinoR_Common | Some common code that was previously in my userspace |
-| Caffeine | Adds a screen saver blocker / keep alive key |
-| Version | Adds a keycode to print the compiled QMK version and date without the fluff |
+| SR_Common | Some common code that was previously in my userspace |
+| SR_Caffeine | Adds a screen saver blocker / keep alive key |
+| SR_Version | Adds a keycode to print the compiled QMK version and date without the fluff |
 
 > Sorry, individual READMEs are still in my TODO list :frowning:.

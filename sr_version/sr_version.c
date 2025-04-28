@@ -1,10 +1,8 @@
 // Copyright 2025 Silvino R. (@silvinor)
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-#include <stdio.h>
-#include <string.h>
-#include "quantum.h"
-#include "report.h"
+#include QMK_KEYBOARD_H
+#include "sr_version.h"
 #include "version.h"
 
 // these sizes must be larger than the origin strings for `strncpy` to work

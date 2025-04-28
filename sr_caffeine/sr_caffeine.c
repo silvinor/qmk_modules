@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
-#include "caffeine.h"
+#include "sr_caffeine.h"
 
 #define RGB_MATRIX_MINIMUM_BRIGHTNESS 64
 
