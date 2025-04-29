@@ -8,16 +8,20 @@
 #endif
 
 #if defined(RGB_MATRIX_ENABLE) || defined(LED_CAFFEINE_PIN)
-void blink_changed_sr_caffeine(bool is_blink_on);
+void blink_changed_sr_caffeine(bool is_blink_on); // weak
 #endif
-void matrix_scan_caffeine(void);
+
+void matrix_scan_sr_caffeine(void);
+
 #ifdef RGB_MATRIX_ENABLE
 bool rgb_matrix_indicators_sr_caffeine(void);
 #endif
+
 #ifdef LED_CAFFEINE_PIN
 bool led_update_sr_caffeine(led_t led_state);
 #endif
-void housekeeping_task_sr_caffeine(void);
+
+void housekeeping_task_sr_caffeine(void); // called by Community Modules
 
 #if defined(RGB_MATRIX_ENABLE) || defined(RGB_LIGHT_ENABLE)
 
@@ -43,4 +47,4 @@ static inline rgb_t adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_
 bool process_keycode_sr_caffeine_on(keyrecord_t *record);
 bool process_keycode_sr_caffeine_off(keyrecord_t *record);
 bool process_keycode_sr_caffeine_toggle(keyrecord_t *record);
-bool process_record_sr_caffeine(uint16_t keycode, keyrecord_t *record);
+bool process_record_sr_caffeine(uint16_t keycode, keyrecord_t *record); // called by Community Modules

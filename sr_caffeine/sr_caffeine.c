@@ -177,7 +177,7 @@ void housekeeping_task_sr_caffeine(void) {
  */
 #ifdef RGB_MATRIX_ENABLE
 bool rgb_matrix_indicators_sr_caffeine(void) {
-    // assume that `matrix_scan_caffeine` is running to toggle `is_blink_rgb_on`
+    // assume that `matrix_scan_sr_caffeine` is running to toggle `is_blink_rgb_on`
     if ((caffeine_key_index != UINT8_MAX) && is_blink_rgb_on) {
         rgb_matrix_set_color(caffeine_key_index, caffeine_color.r, caffeine_color.g, caffeine_color.b);
     }
