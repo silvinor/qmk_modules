@@ -217,6 +217,12 @@ bool process_keycode_sr_caffeine_on(keyrecord_t *record) {
        // start the timer
         timer_caffeine_buffer = sync_timer_read32();
         is_caffeine_on        = true;
+#ifdef RGB_MATRIX_ENABLE
+        is_blink_rgb_on = true;
+#endif
+#ifdef LED_CAFFEINE_PIN
+        is_blink_led_on = true;
+#endif
     }
     return false;
 }
@@ -244,9 +250,9 @@ bool process_keycode_sr_caffeine_off(keyrecord_t *record) {
 bool process_keycode_sr_caffeine_toggle(keyrecord_t *record) {
     if (record->event.pressed) {
         if (is_caffeine_on) {
-            return process_keycode_caffeine_off(record);
+            return process_keycode_sr_caffeine_off(record);
         } else {
-            return process_keycode_caffeine_on(record);
+            return process_keycode_sr_caffeine_on(record);
         }
     }
     return false;
@@ -259,15 +265,15 @@ bool process_keycode_sr_caffeine_toggle(keyrecord_t *record) {
 bool process_record_sr_caffeine(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case COMMUNITY_MODULE_CAFFEINE_ON:
-            return process_keycode_caffeine_on(record);
+            return process_keycode_sr_caffeine_on(record);
             break;
 
         case COMMUNITY_MODULE_CAFFEINE_OFF:
-            return process_keycode_caffeine_off(record);
+            return process_keycode_sr_caffeine_off(record);
             break;
 
         case COMMUNITY_MODULE_CAFFEINE_TOGGLE:
-            return process_keycode_caffeine_toggle(record);
+            return process_keycode_sr_caffeine_toggle(record);
             break;
     }
     return true;
