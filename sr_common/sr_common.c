@@ -1,4 +1,4 @@
-// Copyright 2023 Silvino Rodrigues (@silvinor)
+// Copyright 2023 Silvino R. (@silvinor)
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include QMK_KEYBOARD_H
@@ -29,7 +29,7 @@ bool kc_register_code_3(keyrecord_t *record, uint16_t data1, uint16_t data2, uin
 }
 
 #ifdef RGB_MATRIX_ENABLE // only need this for RGB MATRIX rn, but may change
-bool process_record_common(uint16_t keycode, keyrecord_t *record) {
+bool process_record_sr_common(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // Set all keys to yellow on EEPROM reset command
         case QK_CLEAR_EEPROM:

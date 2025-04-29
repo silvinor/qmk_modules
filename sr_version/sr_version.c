@@ -1,5 +1,5 @@
 // Copyright 2025 Silvino R. (@silvinor)
-// SPDX-License-Identifier: GPL-2.0-or-later
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #include QMK_KEYBOARD_H
 #include "sr_version.h"
@@ -12,7 +12,7 @@
 // Initialise as an empty string
 static char version_string[VERSION_OUTPUT_BUFFER_SIZE] = {'\0'};
 
-bool process_record_version(uint16_t keycode, keyrecord_t *record) {
+bool process_record_sr_version(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case COMMUNITY_MODULE_SEND_VERSION:
             if (record->event.pressed) {

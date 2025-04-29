@@ -1,5 +1,5 @@
 // Copyright 2025 Silvino R. (@silvinor)
-// SPDX-License-Identifier: GPL-2.0-or-later
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #include QMK_KEYBOARD_H
 #include "sr_caffeine.h"
@@ -114,7 +114,7 @@ __attribute__((weak)) void blink_changed_caffeine(bool is_blink_on) {
  *   void matrix_scan_user(void) {}
  *   #endif
  */
-void matrix_scan_caffeine(void) {
+void matrix_scan_sr_caffeine(void) {
     if (is_caffeine_on) {
 #if defined(RGB_MATRIX_ENABLE) || defined(LED_CAFFEINE_PIN)
         // Check for elapsed timer
@@ -150,7 +150,7 @@ void matrix_scan_caffeine(void) {
  * Loop Housekeeping ---------------------------------------------------------
  * Note : if you're using as a module, this will get called by the module compile
  */
-void housekeeping_task_caffeine(void) {
+void housekeeping_task_sr_caffeine(void) {
 #ifdef RGB_MATRIX_ENABLE
     // switch off blinking if RGB has been toggled off
     if (is_blink_rgb_on && !rgb_matrix_is_enabled()) {
@@ -176,7 +176,7 @@ void housekeeping_task_caffeine(void) {
  *   #endif
  */
 #ifdef RGB_MATRIX_ENABLE
-bool rgb_matrix_indicators_caffeine(void) {
+bool rgb_matrix_indicators_sr_caffeine(void) {
     // assume that `matrix_scan_caffeine` is running to toggle `is_blink_rgb_on`
     if ((caffeine_key_index != UINT8_MAX) && is_blink_rgb_on) {
         rgb_matrix_set_color(caffeine_key_index, caffeine_color.r, caffeine_color.g, caffeine_color.b);
@@ -193,7 +193,7 @@ bool rgb_matrix_indicators_caffeine(void) {
  *   #endif
  */
 #ifdef LED_CAFFEINE_PIN
-bool led_update_caffeine(led_t led_state) {
+bool led_update_sr_caffeine(led_t led_state) {
     if (is_caffeine_on) {
         gpio_write_pin(LED_CAFFEINE_PIN, is_blink_led_on ? LED_PIN_ON_STATE : !LED_PIN_ON_STATE);
     }
@@ -204,7 +204,7 @@ bool led_update_caffeine(led_t led_state) {
 /**
  * Switch ON Caffeine --------------------------------------------------------
  */
-bool process_keycode_caffeine_on(keyrecord_t *record) {
+bool process_keycode_sr_caffeine_on(keyrecord_t *record) {
     if (record->event.pressed) {
         __caffeine_tap_jiggle(false); // dummy tap the default keycode so that the kb registers a key tap
 #ifdef RGB_MATRIX_ENABLE
@@ -224,7 +224,7 @@ bool process_keycode_caffeine_on(keyrecord_t *record) {
 /**
  * Switch OFF Caffeine -------------------------------------------------------
  */
-bool process_keycode_caffeine_off(keyrecord_t *record) {
+bool process_keycode_sr_caffeine_off(keyrecord_t *record) {
     if (record->event.pressed) {
         is_caffeine_on = false;
 #ifdef RGB_MATRIX_ENABLE
@@ -241,7 +241,7 @@ bool process_keycode_caffeine_off(keyrecord_t *record) {
 /**
  * TOGGLE Caffeine on/off ----------------------------------------------------
  */
-bool process_keycode_caffeine_toggle(keyrecord_t *record) {
+bool process_keycode_sr_caffeine_toggle(keyrecord_t *record) {
     if (record->event.pressed) {
         if (is_caffeine_on) {
             return process_keycode_caffeine_off(record);
@@ -256,7 +256,7 @@ bool process_keycode_caffeine_toggle(keyrecord_t *record) {
  * process_record Call-in ----------------------------------------------------
  * Note : if you're using as a module, this will get called by the module compile
  */
-bool process_record_caffeine(uint16_t keycode, keyrecord_t *record) {
+bool process_record_sr_caffeine(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case COMMUNITY_MODULE_CAFFEINE_ON:
             return process_keycode_caffeine_on(record);
