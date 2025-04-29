@@ -8,16 +8,16 @@
 #endif
 
 #if defined(RGB_MATRIX_ENABLE) || defined(LED_CAFFEINE_PIN)
-void blink_changed_caffeine(bool is_blink_on);
+void blink_changed_sr_caffeine(bool is_blink_on);
 #endif
 void matrix_scan_caffeine(void);
 #ifdef RGB_MATRIX_ENABLE
-bool rgb_matrix_indicators_caffeine(void);
+bool rgb_matrix_indicators_sr_caffeine(void);
 #endif
 #ifdef LED_CAFFEINE_PIN
-bool led_update_caffeine(led_t led_state);
+bool led_update_sr_caffeine(led_t led_state);
 #endif
-void housekeeping_task_caffeine(void);
+void housekeeping_task_sr_caffeine(void);
 
 #if defined(RGB_MATRIX_ENABLE) || defined(RGB_LIGHT_ENABLE)
 
@@ -39,10 +39,6 @@ static inline rgb_t adjust_to_brightness(uint8_t r, uint8_t g, uint8_t b, uint8_
 }
 
 #endif // RGB_MATRIX_ENABLE || RGB_LIGHT_ENABLE
-
-#ifdef RGB_MATRIX_ENABLE
-bool rgb_matrix_indicators_sr_caffeine(void);
-#endif
 
 bool process_keycode_sr_caffeine_on(keyrecord_t *record);
 bool process_keycode_sr_caffeine_off(keyrecord_t *record);

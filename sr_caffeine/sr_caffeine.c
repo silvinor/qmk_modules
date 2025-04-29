@@ -92,7 +92,7 @@ void __caffeine_tap_jiggle(bool mouseMove) {
  * Blink State Has Changed ---------------------------------------------------
  */
 #if defined(RGB_MATRIX_ENABLE) || defined(LED_CAFFEINE_PIN)
-__attribute__((weak)) void blink_changed_caffeine(bool is_blink_on) {
+__attribute__((weak)) void blink_changed_sr_caffeine(bool is_blink_on) {
 #    ifdef RGB_MATRIX_ENABLE
     if (is_blink_on) {
         HSV hsv;
@@ -122,13 +122,13 @@ void matrix_scan_sr_caffeine(void) {
             timer_blink_buffer = sync_timer_read32(); // reset timer
 #    ifdef RGB_MATRIX_ENABLE
             is_blink_rgb_on = !is_blink_rgb_on;
-#        ifndef LED_CAFFEINE_PIN // stop double up on `blink_changed_caffeine` call
-            blink_changed_caffeine(is_blink_rgb_on);
+#        ifndef LED_CAFFEINE_PIN // stop double up on `blink_changed_sr_caffeine` call
+            blink_changed_sr_caffeine(is_blink_rgb_on);
 #        endif
 #    endif
 #    ifdef LED_CAFFEINE_PIN
             is_blink_led_on = !is_blink_led_on;
-            blink_changed_caffeine(is_blink_led_on);
+            blink_changed_sr_caffeine(is_blink_led_on);
 #    endif
         }
 #endif
