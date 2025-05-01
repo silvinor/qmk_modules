@@ -210,19 +210,11 @@ bool process_keycode_sr_caffeine_on(keyrecord_t *record) {
 #ifdef RGB_MATRIX_ENABLE
         // bind the key that was pressed
         caffeine_key_index = g_led_config.matrix_co[record->event.key.row][record->event.key.col];
-#endif // RGB_MATRIX_ENABLE
-       // #ifdef LED_CAFFEINE_PIN
-       //         is_blink_led_on = true;
-       // #endif
+#endif
        // start the timer
         timer_caffeine_buffer = sync_timer_read32();
         is_caffeine_on        = true;
-#ifdef RGB_MATRIX_ENABLE
-        is_blink_rgb_on = true;
-#endif
-#ifdef LED_CAFFEINE_PIN
-        is_blink_led_on = true;
-#endif
+        // is_blink_rgb_on & is_blink_led_on remain false
     }
     return false;
 }
