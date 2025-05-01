@@ -6,8 +6,12 @@
 #include "version.h"
 
 // these sizes must be larger than the origin strings for `strncpy` to work
-#define VERSION_VERSION_BUFFER_SIZE 30
-#define VERSION_OUTPUT_BUFFER_SIZE 80
+#define VERSION_VERSION_BUFFER_SIZE 24
+#ifdef VIA_PROTOCOL_VERSION
+#    define VERSION_OUTPUT_BUFFER_SIZE 96
+#else
+#    define VERSION_OUTPUT_BUFFER_SIZE 64
+#endif
 
 // Initialise as an empty string
 static char version_string[VERSION_OUTPUT_BUFFER_SIZE] = {'\0'};
@@ -17,17 +21,29 @@ bool process_record_sr_version(uint16_t keycode, keyrecord_t *record) {
         case COMMUNITY_MODULE_SEND_VERSION:
             if (record->event.pressed) {
                 if (version_string[0] == '\0') {
-                    char qmkver[VERSION_VERSION_BUFFER_SIZE];
-                    snprintf(qmkver, sizeof(qmkver), "%s", QMK_VERSION);
-                    char *dash_pos = strchr(qmkver, '-');
+                    char qmk_ver[VERSION_VERSION_BUFFER_SIZE];
+#ifdef QMK_VERSION_MAJOR
+                    snprintf(qmk_ver, sizeof(qmk_ver), "%d.%d.%d", QMK_VERSION_MAJOR, QMK_VERSION_MINOR, QMK_VERSION_PATCH);
+#else
+                    snprintf(qmk_ver, sizeof(qmk_ver), "%s", QMK_VERSION);
+                    char *dash_pos = strchr(qmk_ver, '-');
                     if (dash_pos) {
                         *dash_pos = '\0'; // Crop at first '-'
                     }
+#endif
 
                     char build_date[11];
                     snprintf(build_date, sizeof(build_date), "%.10s", QMK_BUILDDATE);
 
-                    snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s]", QMK_KEYBOARD, QMK_KEYMAP, qmkver, build_date);
+#ifdef VIA_PROTOCOL_VERSION
+#    ifdef VIAL_PROTOCOL_VERSION
+                    snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s] & Vial %lu", QMK_KEYBOARD, QMK_KEYMAP, qmk_ver, build_date, VIAL_PROTOCOL_VERSION);
+#    else
+                    snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s] & VIA %d", QMK_KEYBOARD, QMK_KEYMAP, qmk_ver, build_date, VIA_PROTOCOL_VERSION);
+#    endif
+#else
+                    snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s]", QMK_KEYBOARD, QMK_KEYMAP, qmk_ver, build_date);
+#endif
                 }
                 SEND_STRING(version_string);
             }
