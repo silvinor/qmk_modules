@@ -1,7 +1,9 @@
+# Copyright 2025 Silvino R. (@silvinor)
+# SPDX-License-Identifier: GPL-3.0-or-later
 #
 #  Ideas from https://discord.com/channels/440868230475677696/440868230475677698/1095484933549600808
 #  Thank you @tzarc & @elpekenin
-#  * This should work for both QMK and Vial-QMK
+#  *** This should work for both QMK and Vial-QMK
 #
 
 GENERATED_VERSION_H_FILE = $(INTERMEDIATE_OUTPUT)/src/version.h
@@ -27,7 +29,6 @@ QMK_VERSION_DATE := "$(QMK_GIT_DATE)"
 QMK_VERSION_DATE_YEAR := $(shell echo $(QMK_GIT_DATE) | cut -d- -f1)
 QMK_VERSION_DATE_MONTH := $(shell expr $(shell echo $(QMK_GIT_DATE) | cut -d- -f2) + 0)
 QMK_VERSION_DATE_DAY := $(shell expr $(shell echo $(QMK_GIT_DATE) | cut -d- -f3) + 0)
-
 endif
 
 # Version

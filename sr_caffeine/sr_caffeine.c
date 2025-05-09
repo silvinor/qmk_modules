@@ -3,6 +3,9 @@
 
 #include QMK_KEYBOARD_H
 #include "sr_caffeine.h"
+#ifdef CONSOLE_ENABLE
+#    include "print.h"
+#endif
 
 #define RGB_MATRIX_MINIMUM_BRIGHTNESS 64
 
@@ -52,6 +55,10 @@ uint8_t mouse_loop = 0; // keep track of the jiggle mouse movements
  * Internal keycode pusher ---------------------------------------------------
  */
 void __caffeine_tap_jiggle(bool mouseMove) {
+#ifdef CONSOLE_ENABLE
+    print("*** Caffeine Tap/Jiggle\n");
+#endif
+
     // --- tap a key ---
     tap_code(CAFFEINE_KEY_CODE);
 
@@ -206,12 +213,15 @@ bool led_update_sr_caffeine(led_t led_state) {
  */
 bool process_keycode_sr_caffeine_on(keyrecord_t *record) {
     if (record->event.pressed) {
+#ifdef CONSOLE_ENABLE
+        print("Caffeine ON\n");
+#endif
         __caffeine_tap_jiggle(false); // dummy tap the default keycode so that the kb registers a key tap
 #ifdef RGB_MATRIX_ENABLE
         // bind the key that was pressed
         caffeine_key_index = g_led_config.matrix_co[record->event.key.row][record->event.key.col];
 #endif
-       // start the timer
+        // start the timer
         timer_caffeine_buffer = sync_timer_read32();
         is_caffeine_on        = true;
         // is_blink_rgb_on & is_blink_led_on remain false
@@ -224,6 +234,10 @@ bool process_keycode_sr_caffeine_on(keyrecord_t *record) {
  */
 bool process_keycode_sr_caffeine_off(keyrecord_t *record) {
     if (record->event.pressed) {
+#ifdef CONSOLE_ENABLE
+        print("Caffeine OFF\n");
+#endif
+
         is_caffeine_on = false;
 #ifdef RGB_MATRIX_ENABLE
         // caffeine_key_index = UINT8_MAX;
@@ -256,17 +270,29 @@ bool process_keycode_sr_caffeine_toggle(keyrecord_t *record) {
  */
 bool process_record_sr_caffeine(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case COMMUNITY_MODULE_CAFFEINE_ON:
+        case COMMUNITY_MODULE_CAFFEINE_ON: {
+#ifdef CONSOLE_ENABLE
+            print("*** COMMUNITY_MODULE_CAFFEINE_ON\n");
+#endif
             return process_keycode_sr_caffeine_on(record);
             break;
+        }
 
-        case COMMUNITY_MODULE_CAFFEINE_OFF:
+        case COMMUNITY_MODULE_CAFFEINE_OFF: {
+#ifdef CONSOLE_ENABLE
+            print("*** COMMUNITY_MODULE_CAFFEINE_OFF\n");
+#endif
             return process_keycode_sr_caffeine_off(record);
             break;
+        }
 
-        case COMMUNITY_MODULE_CAFFEINE_TOGGLE:
+        case COMMUNITY_MODULE_CAFFEINE_TOGGLE: {
+#ifdef CONSOLE_ENABLE
+            print("*** COMMUNITY_MODULE_CAFFEINE_TOGGLE\n");
+#endif
             return process_keycode_sr_caffeine_toggle(record);
             break;
+        }
     }
     return true;
 }

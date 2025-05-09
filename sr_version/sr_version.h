@@ -7,4 +7,5 @@
 #include <string.h>
 #include "report.h"
 
+bool process_keycode_sr_version(keyrecord_t *record);
 bool process_record_sr_version(uint16_t keycode, keyrecord_t *record);
