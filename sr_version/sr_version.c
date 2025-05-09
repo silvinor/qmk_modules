@@ -51,7 +51,8 @@ bool process_keycode_sr_version(keyrecord_t *record) {
         uprintf("%s\n", version_string);
         wait_ms(50);
 #endif
-        SEND_STRING(version_string);
+        // Don't use `SEND_STRING` -> has a bug for __AVR__ builds
+        send_string_with_delay(version_string, 0);
     }
     return false;
 }
