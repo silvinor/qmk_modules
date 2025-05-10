@@ -12,7 +12,7 @@ $(GENERATED_VERSION_H_FILE):
 
 # Info
 
-DUMMY := $(shell printf "\033[1;34mGently poking at the $(GENERATED_VERSION_H_FILE) file...\033[0m\n")
+DUMMY := $(shell printf "\033[1;34mΨ Gently poking at the $(GENERATED_VERSION_H_FILE) file...\033[0m\n")
 $(info $(DUMMY))
 
 # Date
