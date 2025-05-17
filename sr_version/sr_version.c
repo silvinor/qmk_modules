@@ -11,7 +11,7 @@
 // these sizes must be larger than the origin strings for `strncpy` to work
 #define VERSION_VERSION_BUFFER_SIZE 24
 #ifdef VIA_PROTOCOL_VERSION
-#    define VERSION_OUTPUT_BUFFER_SIZE 96
+#    define VERSION_OUTPUT_BUFFER_SIZE 76
 #else
 #    define VERSION_OUTPUT_BUFFER_SIZE 64
 #endif
