@@ -11,7 +11,7 @@
 // these sizes must be larger than the origin strings for `strncpy` to work
 #define VERSION_VERSION_BUFFER_SIZE 24
 #ifdef VIA_PROTOCOL_VERSION
-#    define VERSION_OUTPUT_BUFFER_SIZE 76
+#    define VERSION_OUTPUT_BUFFER_SIZE 86
 #else
 #    define VERSION_OUTPUT_BUFFER_SIZE 64
 #endif
@@ -37,7 +37,7 @@ bool process_keycode_sr_version(keyrecord_t *record) {
 #    ifdef VIAL_PROTOCOL_VERSION
         snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s] & Vial %lu", QMK_KEYBOARD, QMK_KEYMAP, qmk_ver, build_date, VIAL_PROTOCOL_VERSION);
 #    else
-        snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s] & VIA %d", QMK_KEYBOARD, QMK_KEYMAP, qmk_ver, build_date, VIA_PROTOCOL_VERSION);
+        snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s] & VIA 0x%04X", QMK_KEYBOARD, QMK_KEYMAP, qmk_ver, build_date, VIA_PROTOCOL_VERSION);
 #    endif
 #else
         snprintf(version_string, sizeof(version_string), "%s:%s @ %s [%s]", QMK_KEYBOARD, QMK_KEYMAP, qmk_ver, build_date);

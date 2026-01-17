@@ -74,20 +74,20 @@ void __caffeine_tap_jiggle(bool mouseMove) {
     if (mouseMove) {
         switch (mouse_loop) {
             case 1:
-                tap_code(KC_MS_RIGHT);
-                tap_code(KC_MS_LEFT);
+                tap_code(QK_MOUSE_CURSOR_RIGHT);
+                tap_code(QK_MOUSE_CURSOR_LEFT);
                 break;
             case 2:
-                tap_code(KC_MS_DOWN);
-                tap_code(KC_MS_UP);
+                tap_code(QK_MOUSE_CURSOR_DOWN);
+                tap_code(QK_MOUSE_CURSOR_UP);
                 break;
             case 3:
-                tap_code(KC_MS_LEFT);
-                tap_code(KC_MS_RIGHT);
+                tap_code(QK_MOUSE_CURSOR_LEFT);
+                tap_code(QK_MOUSE_CURSOR_RIGHT);
                 break;
             default:
-                tap_code(KC_MS_UP);
-                tap_code(KC_MS_DOWN);
+                tap_code(QK_MOUSE_CURSOR_UP);
+                tap_code(QK_MOUSE_CURSOR_DOWN);
                 break;
         }
         mouse_loop = (mouse_loop + 1) % 4;
